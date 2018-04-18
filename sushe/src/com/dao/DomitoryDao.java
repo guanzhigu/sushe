@@ -92,8 +92,103 @@ public class DomitoryDao {
 		return cnbean;
 	}
 	
+	//Ìí¼Ó
+	public void Add(DomitoryBean cnbean){
+		String sql ="insert into Domitory (";
+		sql += "Domitory_BuildingID, Domitory_Name, Domitory_Type, Domitory_Number, Domitory_Tel";
+		sql+= ")values(";
+		sql+="'"+cnbean.getDomitory_BuildingID()+"','"+cnbean.getDomitory_Name()+"','"+
+		cnbean.getDomitory_Type()+"','"+cnbean.getDomitory_Number()+"','"+
+				cnbean.getDomitory_Tel()+"'";
+		sql+=")";
+		Statement stat = null;
+		ResultSet rs = null;
+		Connection conn = new DBHelper().getConn();
+		try{
+			stat = conn.createStatement();
+			stat.executeUpdate(sql);
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if(conn!=null)
+					conn.close();
+				if(stat!=null)
+					stat.close();
+				if(rs!=null)
+					rs.close();
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	//ÐÞ¸Ä
+	public void Update(DomitoryBean cnbean){
+		String sql = "update Domitory set ";
+		sql+="Domitory_BuildingID='"+cnbean.getDomitory_BuildingID()+"',";
+		sql+="Domitory_Name='"+cnbean.getDomitory_Name()+"',";
+		sql+="Domitory_Type='"+cnbean.getDomitory_Type()+"',";
+		sql+="Domitory_Number='"+cnbean.getDomitory_Number()+"',";
+		sql+="Domitory_Tel='"+cnbean.getDomitory_Tel()+"'";
+		sql+="where Domitory_ID='"+cnbean.getDomitory_ID()+"'";
+		
+		Statement stat = null;
+		ResultSet rs = null;
+		Connection conn = new DBHelper().getConn();
+		try{
+			stat = conn.createStatement();
+			stat.executeUpdate(sql);
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if(conn!=null)
+					conn.close();
+				if(stat!=null)
+					stat.close();
+				if(rs!=null)
+					rs.close();
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	//É¾³ý
+	public void Delete(String strwhere){
+		String sql = "delete Domitory where ";
+		sql+=strwhere;
+		Statement stat = null;
+		ResultSet rs = null;
+		Connection conn = new DBHelper().getConn();
+		try{
+			stat = conn.createStatement();
+			stat.executeUpdate(sql);
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if(conn!=null)
+					conn.close();
+				if(stat!=null)
+					stat.close();
+				if(rs!=null)
+					rs.close();
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	//ÅÐ¶ÏÊÇ·ñÎª¿ÕÖµ
 	private boolean isInvalid(String strwhere) {
 		// TODO Auto-generated method stub
 		return (strwhere.length() ==0 | strwhere==null);
+	}
+	
+	//²âÊÔ
+	public static void main(String[] args){
+		System.out.println("");
 	}
 }
