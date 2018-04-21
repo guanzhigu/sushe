@@ -198,6 +198,7 @@ public class AdminDao {
 		}
 		
 		//É¾³ý
+		@SuppressWarnings("unused")
 		public void Delete(String strwhere){
 			String sql = "delete Admin where ";
 			sql+=strwhere;
