@@ -6,6 +6,17 @@ public class TeacherBean {
 	private String Teacher_Name;
 	private String Teacher_Sex;
 	private String Teacher_Tel;
+	
+	private int Teacher_ID;
+	
+	
+	
+	public int getTeacher_ID() {
+		return Teacher_ID;
+	}
+	public void setTeacher_ID(int teacher_ID) {
+		Teacher_ID = teacher_ID;
+	}
 	public String getTeacher_Username() {
 		return Teacher_Username;
 	}
