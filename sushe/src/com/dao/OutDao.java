@@ -4,17 +4,100 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.bean.LogBean;
+import com.bean.OutBean;
 import com.db.DBHelper;
 
 public class OutDao {
+	//获取列表
+		public List<OutBean> GetList(String strwhere,String strorder){
+			String sql="select * from Out1 o,Student s where o.Out_StudentID=s.Student_ID";
+			if(!(isInvalid(strwhere)))
+			{
+				sql+=" and  "+strwhere;
+			}
+			if(!(isInvalid(strorder)))
+			{
+				sql+=" order by "+strorder;
+			}
+			Statement stat = null;
+			ResultSet rs = null;
+			Connection conn = new DBHelper().getConn();
+			List<OutBean> list=new ArrayList<OutBean>();
+			try{
+				stat = conn.createStatement();
+				rs = stat.executeQuery(sql);
+				while(rs.next()){
+					OutBean cnbean=new OutBean();
+					cnbean.setOut_ID(rs.getInt("Out_ID"));
+					cnbean.setOut_StudentID(rs.getInt("Out_StudentID"));
+					cnbean.setOut_Date(rs.getString("Out_Date"));
+					cnbean.setOut_Remark(rs.getString("Out_Remark"));
+					cnbean.setStudent_Username(rs.getString("Student_Username"));
+					cnbean.setStudent_Name(rs.getString("Student_Name"));
+					cnbean.setStudent_Sex(rs.getString("Student_Sex"));
+					cnbean.setStudent_Class(rs.getString("Student_Class"));
+					list.add(cnbean);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (conn != null)
+						conn.close();
+					if (stat != null)
+						stat.close();
+					if (rs != null)
+						rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			return list;
+		}
+		
+		//获取指定ID的实体Bean
+		public OutBean GetBean(int id){
+			String sql="select * from Out where Out_ID="+id;
+			Statement stat = null;
+			ResultSet rs = null;
+			Connection conn = new DBHelper().getConn();
+			OutBean cnbean=new OutBean();
+			try{
+				stat = conn.createStatement();
+				rs = stat.executeQuery(sql);
+				while(rs.next()){
+					cnbean.setOut_ID(rs.getInt("Out_ID"));
+					cnbean.setOut_StudentID(rs.getInt("Out_StudentID"));
+					cnbean.setOut_Date(rs.getString("Out_Date"));
+					cnbean.setOut_Remark(rs.getString("Out_Remark"));
+					
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (conn != null)
+						conn.close();
+					if (stat != null)
+						stat.close();
+					if (rs != null)
+						rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			return cnbean;
+		}
 	//添加
-		public void Add(LogBean cnbean){
+		public void Add(OutBean cnbean){
 			String sql="insert into Log (";
 			sql+="Log_StudentID,Log_TeacherID,Log_Date,Log_Remark";
 			sql+=") values(";
-			sql+="'"+cnbean.getLog_StudentID()+"','"+cnbean.getLog_TeacherID()+"','"+cnbean.getLog_Date()+"','"+cnbean.getLog_Remark()+"'";
+			sql+="'"+cnbean.getOut_StudentID()+"','"+cnbean.getOut_TeacherID()+"','"+cnbean.getOut_Date()+"','"+cnbean.getOut_Remark()+"'";
 			sql+=")";
 			Statement stat = null;
 			ResultSet rs = null;

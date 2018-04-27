@@ -2,7 +2,7 @@
 <link href="Style/Style.css" rel="stylesheet" type="text/css" />
 <table width="155" border="0" cellspacing="0" cellpadding="0">
             <tr>
-              <td height="31" align="center" background="Images/left1.jpg"><strong>--系统选项--</strong></td>
+              <td height="31" align="center" background="Images/left1.jpg"><strong>系统选项</strong></td>
             </tr>
             <tr>
               <td height="50" align="center" valign="top"><table width="150" border="0" cellspacing="0" cellpadding="0">

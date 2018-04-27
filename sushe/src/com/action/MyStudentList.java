@@ -11,38 +11,52 @@ import com.bean.*;
 import com.dao.*;
 
 
-public class AdminLogList extends ActionSupport {
+public class MyStudentList extends ActionSupport {
 
 	//下面是Action内用于封装用户请求参数的属性
-	private List<LogBean> list;
-	public List<LogBean> getList() {
+	private List<StudentBean> list;
+	public List<StudentBean> getList() {
 		return list;
 	}
-	public void setList(List<LogBean> list) {
+	public void setList(List<StudentBean> list) {
 		this.list = list;
 	}
-	
 	private String Building_ID;
-	private String Domitory_ID;
-	private String Student_Username;
-	
 	public String getBuilding_ID() {
 		return Building_ID;
 	}
 	public void setBuilding_ID(String buildingID) {
 		Building_ID = buildingID;
 	}
+	private List<DomitoryBean> domitorylist;
+	public List<DomitoryBean> getDomitorylist() {
+		return domitorylist;
+	}
+	public void setDomitorylist(List<DomitoryBean> domitorylist) {
+		this.domitorylist = domitorylist;
+	}
+	
+	private String SearchRow;
+	private String SearchKey;
+	public String getSearchRow() {
+		return SearchRow;
+	}
+	public void setSearchRow(String searchRow) {
+		SearchRow = searchRow;
+	}
+	public String getSearchKey() {
+		return SearchKey;
+	}
+	public void setSearchKey(String searchKey) {
+		SearchKey = searchKey;
+	}
+	private String Domitory_ID;
+	
 	public String getDomitory_ID() {
 		return Domitory_ID;
 	}
 	public void setDomitory_ID(String domitoryID) {
 		Domitory_ID = domitoryID;
-	}
-	public String getStudent_Username() {
-		return Student_Username;
-	}
-	public void setStudent_Username(String studentUsername) {
-		Student_Username = studentUsername;
 	}
 	//处理用户请求的execute方法
 	public String execute() throws Exception {
@@ -63,22 +77,20 @@ public class AdminLogList extends ActionSupport {
 		}
 
 		//查询条件
-		String strWhere="Student_State='入住'";
-		if(!(isInvalid(Building_ID)))
+		String strWhere="Student_State='入住' and Building_ID="+Building_ID;
+		if(!(isInvalid(SearchKey)))
 		{
-			strWhere+=" and Building_ID='"+Building_ID+"'";
+			strWhere+=" and "+SearchRow+"='"+SearchKey+"'";
 		}
 		if(!(isInvalid(Domitory_ID)))
 		{
 			strWhere+=" and Domitory_ID='"+Domitory_ID+"'";
 		}
-		if(!(isInvalid(Student_Username)))
-		{
-			strWhere+=" and Student_Username='"+Student_Username+"'";
-		}
 		//查询所有
-		list=new LogDao().GetList(strWhere,"Log_Date desc");
+		list=new StudentDao().GetList(strWhere,"Domitory_Name");
 		
+		//查询所有寝室
+		domitorylist=new DomitoryDao().GetList("Domitory_BuildingID="+Building_ID,"Domitory_Name");
 	
 		return SUCCESS;
 		

@@ -12,7 +12,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="Style/Style.css" rel="stylesheet" type="text/css" />
 </head>
+<script language="JavaScript">
 
+
+function mycheck(){
+   
+   if(isNull(form1.Student_Username.value)){  
+   alert("请输入学生学号！"); 
+   return false;
+   }
+
+}
+
+function isNull(str){
+if ( str == "" ) return true;
+var regu = "^[ ]+$";
+var re = new RegExp(regu);
+return re.test(str);
+}
+   
+   
+</script>
 <body>
 <center>
   <table width="900" border="0" cellspacing="0" cellpadding="0">
@@ -30,31 +50,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           </td>
           <td width="709" align="center" valign="top" bgcolor="#F6F9FE"><table width="709" border="0" cellspacing="0" cellpadding="0">
             <tr>
-              <td height="30" background="Images/mainMenuBg.jpg" style="padding-left:25px;">学生缺寝记录</td>
+              <td height="30" background="Images/mainMenuBg.jpg" style="padding-left:25px;">学生寝室调换</td>
             </tr>
             <tr>
-              <td height="470" align="center" valign="top" bgcolor="#F6F9FE"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                <tr align="center"  class="t1">
-                    <td height="25" bgcolor="#D5E4F4"><strong>日期</strong></td>
-                    <td bgcolor="#D5E4F4"><strong>姓名</strong></td>
-                    <td bgcolor="#D5E4F4"><strong>性别</strong></td>
-                    <td bgcolor="#D5E4F4"><strong>班级</strong></td>
-                    <td bgcolor="#D5E4F4"><strong>寝室号</strong></td>
-                    <td bgcolor="#D5E4F4"><strong>备注</strong></td>
-                    <td bgcolor="#D5E4F4"><strong>管理员</strong></td>
-                    </tr>
-                  <s:iterator id="aa" value="list">
-                    <tr align="center">
-                      <td height="25" align="center">${Log_Date}</td>
-                      <td>${Student_Name}</td>
-                      <td>${Student_Sex}</td>
-                      <td>${Student_Class}</td>
-                      <td>${Domitory_Name}</td>
-                      <td>${Log_Remark}</td>
-                      <td>${Teacher_Name}</td>
-                      </tr>
-                  </s:iterator>
-              </table></td>
+              <td height="470" align="center" valign="top" bgcolor="#F6F9FE"><form name="form1" method="post" action="StudentTH.action" onSubmit="return mycheck()" >
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td width="38%" height="30" align="right">&nbsp;</td>
+                    <td width="62%">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td height="30" align="right"><span style="color:red;">*</span>请输入要调换寝室学生的学号：</td>
+                    <td><label for="Student_ID"></label>
+                      <input type="text" name="Student_Username" id="Student_Username"></td>
+                  </tr>
+                  <tr>
+                    <td height="30">&nbsp;</td>
+                    <td><input type="submit" name="button" id="button" value="确定"></td>
+                  </tr>
+                </table>
+              </form></td>
             </tr>
           </table></td>
         </tr>

@@ -30,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           </td>
           <td width="709" align="center" valign="top" bgcolor="#F6F9FE"><table width="709" border="0" cellspacing="0" cellpadding="0">
             <tr>
-              <td height="30" background="Images/mainMenuBg.jpg" style="padding-left:25px;">学生缺寝记录</td>
+              <td height="30" background="Images/mainMenuBg.jpg" style="padding-left:25px;">学生迁出记录</td>
             </tr>
             <tr>
               <td height="470" align="center" valign="top" bgcolor="#F6F9FE"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -39,19 +39,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <td bgcolor="#D5E4F4"><strong>姓名</strong></td>
                     <td bgcolor="#D5E4F4"><strong>性别</strong></td>
                     <td bgcolor="#D5E4F4"><strong>班级</strong></td>
-                    <td bgcolor="#D5E4F4"><strong>寝室号</strong></td>
                     <td bgcolor="#D5E4F4"><strong>备注</strong></td>
-                    <td bgcolor="#D5E4F4"><strong>管理员</strong></td>
                     </tr>
                   <s:iterator id="aa" value="list">
                     <tr align="center">
-                      <td height="25" align="center">${Log_Date}</td>
+                      <td height="25" align="center">${Out_Date}</td>
                       <td>${Student_Name}</td>
                       <td>${Student_Sex}</td>
                       <td>${Student_Class}</td>
-                      <td>${Domitory_Name}</td>
-                      <td>${Log_Remark}</td>
-                      <td>${Teacher_Name}</td>
+                      <td>${Out_Remark}</td>
                       </tr>
                   </s:iterator>
               </table></td>

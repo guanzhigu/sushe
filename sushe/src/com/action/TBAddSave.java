@@ -11,39 +11,27 @@ import com.bean.*;
 import com.dao.*;
 
 
-public class AdminLogList extends ActionSupport {
+public class TBAddSave extends ActionSupport {
 
 	//下面是Action内用于封装用户请求参数的属性
-	private List<LogBean> list;
-	public List<LogBean> getList() {
-		return list;
+	private String TB_TeacherID ;
+    private String TB_BuildingID ;
+	public String getTB_TeacherID() {
+		return TB_TeacherID;
 	}
-	public void setList(List<LogBean> list) {
-		this.list = list;
+
+	public void setTB_TeacherID(String tBTeacherID) {
+		TB_TeacherID = tBTeacherID;
 	}
-	
-	private String Building_ID;
-	private String Domitory_ID;
-	private String Student_Username;
-	
-	public String getBuilding_ID() {
-		return Building_ID;
+
+	public String getTB_BuildingID() {
+		return TB_BuildingID;
 	}
-	public void setBuilding_ID(String buildingID) {
-		Building_ID = buildingID;
+
+	public void setTB_BuildingID(String tBBuildingID) {
+		TB_BuildingID = tBBuildingID;
 	}
-	public String getDomitory_ID() {
-		return Domitory_ID;
-	}
-	public void setDomitory_ID(String domitoryID) {
-		Domitory_ID = domitoryID;
-	}
-	public String getStudent_Username() {
-		return Student_Username;
-	}
-	public void setStudent_Username(String studentUsername) {
-		Student_Username = studentUsername;
-	}
+
 	//处理用户请求的execute方法
 	public String execute() throws Exception {
 		
@@ -61,26 +49,25 @@ public class AdminLogList extends ActionSupport {
 			out.print("<script language='javascript'>alert('请重新登录！');window.location='Login.jsp';</script>");
 			out.flush();out.close();return null;
 		}
-
-		//查询条件
-		String strWhere="Student_State='入住'";
-		if(!(isInvalid(Building_ID)))
-		{
-			strWhere+=" and Building_ID='"+Building_ID+"'";
-		}
-		if(!(isInvalid(Domitory_ID)))
-		{
-			strWhere+=" and Domitory_ID='"+Domitory_ID+"'";
-		}
-		if(!(isInvalid(Student_Username)))
-		{
-			strWhere+=" and Student_Username='"+Student_Username+"'";
-		}
-		//查询所有
-		list=new LogDao().GetList(strWhere,"Log_Date desc");
 		
-	
-		return SUCCESS;
+		//查询是否存在
+		List<TBBean> list=new TBDao().GetList("TB_TeacherID='"+TB_TeacherID+"' and TB_BuildingID="+TB_BuildingID, "");
+		if(list.size()>0)
+		{
+			out.print("<script language='javascript'>alert('该管理员已经在管理本楼宇了，不要重复添加！');history.back(-1);</script>");
+			out.flush();out.close();return null;
+		}
+		
+		//添加
+		TBBean cnbean=new TBBean();
+		cnbean.setTB_TeacherID(Integer.parseInt(TB_TeacherID));
+		cnbean.setTB_BuildingID(Integer.parseInt(TB_BuildingID));
+
+		new TBDao().Add(cnbean);
+		    
+		//跳转
+		out.print("<script language='javascript'>alert('添加成功！');window.location='TBManager.action?Building_ID="+TB_BuildingID+"';</script>");
+		out.flush();out.close();return null;
 		
 	}
 	

@@ -1,15 +1,14 @@
 package com.action;
 
 import javax.servlet.http.HttpSession;
-
 import org.apache.struts2.ServletActionContext;
+import com.dao.*;
+import com.bean.*;
 
-import com.dao.AdminDao;
-import com.dao.StudentDao;
-import com.dao.TeacherDao;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class GoLogin extends ActionSupport{
+public class GoLogin extends ActionSupport {
+
 	//下面是Action内用于封装用户请求参数的属性
 	private String Type;
 	private String Username;
@@ -39,18 +38,21 @@ public class GoLogin extends ActionSupport{
 	public void setMsg(String msg) {
 		Msg = msg;
 	}
-	
 	//处理用户请求的execute方法
-	public String execute() throws Exception{
-		if(Type.equals("系统管理员"))
+	public String execute() throws Exception {
+		
+		
+		
+		if(Type.equals("1"))
 		{
-			if(null == new AdminDao().CheckLogin(Username, Password))
-			{
-				Msg = "用户名或者密码错误！";
+			if (null == new AdminDao().CheckLogin(Username, Password)) {
+				Msg = "用户名或者密码错误";
 				return INPUT;
-			}else{
+			}
+			else
+			{
 				//获取ID
-				String Admin_ID = new AdminDao().CheckLogin(Username, Password);
+				String Admin_ID=new AdminDao().CheckLogin(Username, Password);
 				//创建session
 				HttpSession session = ServletActionContext.getRequest().getSession();
 				session.setAttribute("id", Admin_ID);
@@ -58,14 +60,16 @@ public class GoLogin extends ActionSupport{
 				return SUCCESS;
 			}
 		}
-		else if(Type.equals("楼宇管理员"))
+		else if(Type.equals("2"))
 		{
-			if(null==new TeacherDao().CheckLogin(Username, Password)){
+			if (null == new TeacherDao().CheckLogin(Username, Password)) {
 				Msg = "用户名或者密码错误";
 				return INPUT;
-			}else{
+			}
+			else
+			{
 				//获取ID
-				String Teacher_ID = new TeacherDao().CheckLogin(Username, Password);
+				String Teacher_ID=new TeacherDao().CheckLogin(Username, Password);
 				//创建session
 				HttpSession session = ServletActionContext.getRequest().getSession();
 				session.setAttribute("id", Teacher_ID);
@@ -73,25 +77,29 @@ public class GoLogin extends ActionSupport{
 				
 				return SUCCESS;
 			}
-		}else if(Type.equals("学生"))
+		}
+		else if(Type.equals("3"))
 		{
-			if(null==new StudentDao().CheckLogin(Username, Password)){
+			if (null == new StudentDao().CheckLogin(Username, Password)) {
 				Msg = "用户名或者密码错误";
 				return INPUT;
-			}else{
+			}
+			else
+			{
 				//获取ID
-				String Student_ID = new StudentDao().CheckLogin(Username, Password);
+				String Student_ID=new StudentDao().CheckLogin(Username, Password);
 				//创建session
 				HttpSession session = ServletActionContext.getRequest().getSession();
 				session.setAttribute("id", Student_ID);
 				session.setAttribute("type", "3");
-				
 				return SUCCESS;
-			} 
+			}
 		}
-		else{
-			Msg = "身份类型错误！";
+		else
+		{
+			Msg = "身份类型错误";
 			return INPUT;
 		}
+		
 	}
 }

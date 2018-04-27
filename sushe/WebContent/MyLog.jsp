@@ -12,7 +12,49 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="Style/Style.css" rel="stylesheet" type="text/css" />
 </head>
+<script language="JavaScript">
 
+
+function mycheck(){
+   if(isNull(form1.Student_Username.value)){  
+   alert("请输入学号！"); 
+   return false;
+   }
+   if(isNull(form1.Student_Password.value)){
+   alert("请输入密码！");
+   return false;
+   }
+   if(isNull(form1.Student_Password2.value)){
+   alert("请输入重复密码！");
+   return false;
+   }
+   if (document.form1.Student_Password.value != document.form1.Student_Password2.value) { 
+   alert("您两次输入的新密码不一致！请重新输入！"); 
+   return false; 
+   }  
+   if(isNull(form1.Student_Name.value)){
+   alert("请输入姓名！");
+   return false;
+   }
+   if(isNull(form1.Student_Sex.value)){
+   alert("请选择性别！");
+   return false;
+   }
+   if(isNull(form1.Student_Class.value)){
+   alert("请输入班级！");
+   return false;
+   }
+}
+
+function isNull(str){
+if ( str == "" ) return true;
+var regu = "^[ ]+$";
+var re = new RegExp(regu);
+return re.test(str);
+}
+   
+   
+</script>
 <body>
 <center>
   <table width="900" border="0" cellspacing="0" cellpadding="0">
@@ -33,28 +75,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <td height="30" background="Images/mainMenuBg.jpg" style="padding-left:25px;">学生缺寝记录</td>
             </tr>
             <tr>
-              <td height="470" align="center" valign="top" bgcolor="#F6F9FE"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                <tr align="center"  class="t1">
-                    <td height="25" bgcolor="#D5E4F4"><strong>日期</strong></td>
-                    <td bgcolor="#D5E4F4"><strong>姓名</strong></td>
-                    <td bgcolor="#D5E4F4"><strong>性别</strong></td>
-                    <td bgcolor="#D5E4F4"><strong>班级</strong></td>
-                    <td bgcolor="#D5E4F4"><strong>寝室号</strong></td>
-                    <td bgcolor="#D5E4F4"><strong>备注</strong></td>
-                    <td bgcolor="#D5E4F4"><strong>管理员</strong></td>
-                    </tr>
+              <td height="470" align="center" valign="top" bgcolor="#F6F9FE">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td width="100%" height="30" align="center" style="color:red;">请先选择楼宇</td>
+                  </tr>
                   <s:iterator id="aa" value="list">
-                    <tr align="center">
-                      <td height="25" align="center">${Log_Date}</td>
-                      <td>${Student_Name}</td>
-                      <td>${Student_Sex}</td>
-                      <td>${Student_Class}</td>
-                      <td>${Domitory_Name}</td>
-                      <td>${Log_Remark}</td>
-                      <td>${Teacher_Name}</td>
-                      </tr>
+                  <tr>
+                    <td height="30" align="center">
+                      <a href="MyLogList.action?Building_ID=${TB_BuildingID}">${Building_Name}</a>
+                    </td>
+                  </tr>
                   </s:iterator>
-              </table></td>
+                </table>
+              </td>
             </tr>
           </table></td>
         </tr>

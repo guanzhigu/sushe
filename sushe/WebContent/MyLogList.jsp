@@ -33,28 +33,49 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <td height="30" background="Images/mainMenuBg.jpg" style="padding-left:25px;">学生缺寝记录</td>
             </tr>
             <tr>
-              <td height="470" align="center" valign="top" bgcolor="#F6F9FE"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                <tr align="center"  class="t1">
-                    <td height="25" bgcolor="#D5E4F4"><strong>日期</strong></td>
+              <td height="470" align="center" valign="top" bgcolor="#F6F9FE"><form name="form1" method="post" action="MyLogList.action">
+                <table width="100%%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td width="28%" height="30" style="padding-left:20px;"> 功能导航： <a href="MyStudent.action">返回上层</a></td>
+                    <td width="72%">查询：
+                      <select name="Domitory_ID" id="Domitory_ID">
+                        <option value="">全部寝室</option>
+                        <s:iterator  value="domitorylist">
+                        <option value="${Domitory_ID}">${Domitory_Name}</option>
+                        </s:iterator>
+                      </select>
+                      <select name="SearchRow" id="SearchRow">
+                        <option value="Student_Name">姓名</option>
+                        <option value="Student_Username">学号</option>
+                        <option value="Student_Class">班级</option>
+                      </select>
+                      <input name="SearchKey" type="text" class="text1" id="SearchKey">
+                      <input type="submit" name="button" id="button" value="点击查询">
+                      <label for="Building_ID"></label>
+                      <input name="Building_ID" type="text" class="noshow" id="Building_ID" value="${Building_ID}"></td>
+                  </tr>
+                </table>
+              </form>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr align="center"  class="t1">
+                    <td height="25" bgcolor="#D5E4F4"><strong>寝室号</strong></td>
                     <td bgcolor="#D5E4F4"><strong>姓名</strong></td>
                     <td bgcolor="#D5E4F4"><strong>性别</strong></td>
                     <td bgcolor="#D5E4F4"><strong>班级</strong></td>
-                    <td bgcolor="#D5E4F4"><strong>寝室号</strong></td>
+                    <td bgcolor="#D5E4F4"><strong>日期</strong></td>
                     <td bgcolor="#D5E4F4"><strong>备注</strong></td>
-                    <td bgcolor="#D5E4F4"><strong>管理员</strong></td>
                     </tr>
                   <s:iterator id="aa" value="list">
                     <tr align="center">
-                      <td height="25" align="center">${Log_Date}</td>
+                      <td height="25" align="center">${Domitory_Name}</td>
                       <td>${Student_Name}</td>
                       <td>${Student_Sex}</td>
                       <td>${Student_Class}</td>
-                      <td>${Domitory_Name}</td>
+                      <td>${Log_Date}</td>
                       <td>${Log_Remark}</td>
-                      <td>${Teacher_Name}</td>
                       </tr>
                   </s:iterator>
-              </table></td>
+                </table></td>
             </tr>
           </table></td>
         </tr>

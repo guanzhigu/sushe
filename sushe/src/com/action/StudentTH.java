@@ -11,7 +11,7 @@ import com.bean.*;
 import com.dao.*;
 
 
-public class AdminLog extends ActionSupport {
+public class StudentTH extends ActionSupport {
 
 	//下面是Action内用于封装用户请求参数的属性
 	private List<BuildingBean> buildinglist;
@@ -51,6 +51,24 @@ public class AdminLog extends ActionSupport {
 		DomitoryID = domitoryID;
 	}
 
+	private String Student_Username;
+	
+	public String getStudent_Username() {
+		return Student_Username;
+	}
+
+	public void setStudent_Username(String studentUsername) {
+		Student_Username = studentUsername;
+	}
+	private StudentBean cnbean;
+	public StudentBean getCnbean() {
+		return cnbean;
+	}
+
+	public void setCnbean(StudentBean cnbean) {
+		this.cnbean = cnbean;
+	}
+
 	//处理用户请求的execute方法
 	public String execute() throws Exception {
 		
@@ -69,6 +87,15 @@ public class AdminLog extends ActionSupport {
 			out.flush();out.close();return null;
 		}
 		
+		//查询是否存在
+		List<StudentBean> list=new StudentDao().GetList("Student_Username='"+Student_Username+"'", "");
+		if(list.size()<1)
+		{
+			out.print("<script language='javascript'>alert('学号不存在，或学生未处于入住状态！');history.back(-1);</script>");
+			out.flush();out.close();return null;
+		}
+		
+		
 		//查询楼宇
 		buildinglist=new BuildingDao().GetList("","Building_Name");
 //		System.out.println(BuildingID);
@@ -83,6 +110,9 @@ public class AdminLog extends ActionSupport {
 		}
 		//查询寝室
 		domitorylist=new DomitoryDao().GetList(strWhere,"Domitory_Name");
+		
+		//查询学生信息
+		cnbean=new StudentDao().GetFirstBean("Student_Username='"+Student_Username+"'");
 		
 		return SUCCESS;
 		

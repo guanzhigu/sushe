@@ -11,39 +11,27 @@ import com.bean.*;
 import com.dao.*;
 
 
-public class AdminLogList extends ActionSupport {
+public class TeacherUpdate extends ActionSupport {
 
 	//下面是Action内用于封装用户请求参数的属性
-	private List<LogBean> list;
-	public List<LogBean> getList() {
-		return list;
+	private String Teacher_ID;
+	private TeacherBean cnbean;
+	public String getTeacher_ID() {
+		return Teacher_ID;
 	}
-	public void setList(List<LogBean> list) {
-		this.list = list;
+
+	public void setTeacher_ID(String studentID) {
+		Teacher_ID = studentID;
 	}
-	
-	private String Building_ID;
-	private String Domitory_ID;
-	private String Student_Username;
-	
-	public String getBuilding_ID() {
-		return Building_ID;
+
+	public TeacherBean getCnbean() {
+		return cnbean;
 	}
-	public void setBuilding_ID(String buildingID) {
-		Building_ID = buildingID;
+
+	public void setCnbean(TeacherBean cnbean) {
+		this.cnbean = cnbean;
 	}
-	public String getDomitory_ID() {
-		return Domitory_ID;
-	}
-	public void setDomitory_ID(String domitoryID) {
-		Domitory_ID = domitoryID;
-	}
-	public String getStudent_Username() {
-		return Student_Username;
-	}
-	public void setStudent_Username(String studentUsername) {
-		Student_Username = studentUsername;
-	}
+
 	//处理用户请求的execute方法
 	public String execute() throws Exception {
 		
@@ -61,25 +49,9 @@ public class AdminLogList extends ActionSupport {
 			out.print("<script language='javascript'>alert('请重新登录！');window.location='Login.jsp';</script>");
 			out.flush();out.close();return null;
 		}
-
-		//查询条件
-		String strWhere="Student_State='入住'";
-		if(!(isInvalid(Building_ID)))
-		{
-			strWhere+=" and Building_ID='"+Building_ID+"'";
-		}
-		if(!(isInvalid(Domitory_ID)))
-		{
-			strWhere+=" and Domitory_ID='"+Domitory_ID+"'";
-		}
-		if(!(isInvalid(Student_Username)))
-		{
-			strWhere+=" and Student_Username='"+Student_Username+"'";
-		}
-		//查询所有
-		list=new LogDao().GetList(strWhere,"Log_Date desc");
 		
-	
+		//查询
+		cnbean=new TeacherDao().GetBean(Integer.parseInt(Teacher_ID));
 		return SUCCESS;
 		
 	}

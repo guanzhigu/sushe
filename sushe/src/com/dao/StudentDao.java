@@ -146,8 +146,8 @@ public class StudentDao {
 	}
 	
 	//获取指定ID的实体Bean
-	public StudentBean GetFirstBean(int id){
-		String sql = "select * from Student where Student_ID="+id;
+	public StudentBean GetFirstBean(String string){
+		String sql = "select * from Student where Student_ID="+string;
 		Statement stat = null;
 		ResultSet rs = null;
 		Connection conn = new DBHelper().getConn();
@@ -184,8 +184,8 @@ public class StudentDao {
 	}
 	
 	//获取指定ID的实体Bean
-	public StudentBean GetAllBean(int id){
-		String sql = "select * from Student where Student_ID"+id;
+	public StudentBean GetAllBean(int i){
+		String sql = "select * from Student where Student_ID"+i;
 		Statement stat = null;
 		ResultSet rs = null;
 		Connection conn = new DBHelper().getConn();
@@ -327,9 +327,9 @@ public class StudentDao {
 	}
 	
 	//删除
-	public void Delete(StudentBean strwhere){
+	public void Delete(String string){
 		String sql = "delete Student where ";
-		sql+=strwhere;
+		sql+=string;
 		Statement stat = null;
 		ResultSet rs = null;
 		Connection conn = new DBHelper().getConn();

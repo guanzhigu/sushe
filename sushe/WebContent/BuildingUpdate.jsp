@@ -12,6 +12,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="Style/Style.css" rel="stylesheet" type="text/css" />
 </head>
+<script language="JavaScript">
+
+
+function mycheck(){
+   if(isNull(form1.Building_Username.value)){  
+   alert("请输入用户名！"); 
+   return false;
+   }
+   if (document.form1.Building_Password.value != document.form1.Building_Password2.value) { 
+   alert("您两次输入的新密码不一致！请重新输入！"); 
+   return false; 
+   }  
+   if(isNull(form1.Building_Name.value)){
+   alert("请输入姓名！");
+   return false;
+   }
+   if(isNull(form1.Building_Sex.value)){
+   alert("请选择性别！");
+   return false;
+   }
+   if(isNull(form1.Building_Tel.value)){
+   alert("请输入联系电话！");
+   return false;
+   }
+}
+
+function isNull(str){
+if ( str == "" ) return true;
+var regu = "^[ ]+$";
+var re = new RegExp(regu);
+return re.test(str);
+}
+   
+   
+</script>
 <body>
 <center>
   <table width="900" border="0" cellspacing="0" cellpadding="0">
@@ -29,41 +64,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           </td>
           <td width="709" align="center" valign="top" bgcolor="#F6F9FE"><table width="709" border="0" cellspacing="0" cellpadding="0">
             <tr>
-              <td height="30" background="Images/mainMenuBg.jpg" style="padding-left:25px;">学生缺寝记录</td>
+              <td height="30" background="Images/mainMenuBg.jpg" style="padding-left:25px;">修改楼宇</td>
             </tr>
             <tr>
-              <td height="470" align="center" valign="top" bgcolor="#F6F9FE"><form name="form1" method="post" action="AdminLogList.action" onSubmit="return mycheck()" >
+              <td height="470" align="center" valign="top" bgcolor="#F6F9FE"><form name="form1" method="post" action="BuildingUpdateSave.action" onSubmit="return mycheck()" >
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                   <tr>
                     <td width="33%" height="30" align="right">&nbsp;</td>
-                    <td width="67%">&nbsp;</td>
+                    <td width="67%"><input name="Building_ID" type="text" class="noshow" id="Building_ID" value="<s:property value='cnbean.Building_ID'/>"></td>
                   </tr>
                   <tr>
-                    <td height="30" align="right">楼宇：</td>
-                    <td><select name="Building_ID" id="Building_ID" onChange="javascript:window.location='AdminLog.action?BuildingID='+this.value;">
-                      <option value="">请选择</option>
-                      <s:iterator value="buildinglist">
-                      <option value="${Building_ID}" <s:if test="BuildingID==Building_ID">selected</s:if>>${Building_Name}</option>
-                      </s:iterator>
-                      </select></td>
+                    <td height="30" align="right"><span style="color:red;">*</span>用户名：</td>
+                    <td><input name="Building_Name" type="text" class="text2" id="Building_Name" value="<s:property value='cnbean.Building_Name'/>"></td>
                   </tr>
                   <tr>
-                    <td height="30" align="right">寝室：</td>
-                    <td><select name="Domitory_ID" id="Domitory_ID">
-                      <option value="">请选择</option>
-                      <s:iterator value="domitorylist">
-                        <option value="${Domitory_ID}">${Domitory_Name}</option>
-                      </s:iterator>
-                    </select></td>
-                  </tr>
-                  <tr>
-                    <td height="30" align="right">学生学号：</td>
-                    <td><label for="Student_ID"></label>
-                      <input type="text" name="Student_Username" id="Student_Username"></td>
+                    <td height="30" align="right"><span style="color:red;">*</span>联系电话：</td>
+                    <td><textarea name="Building_Introduction" id="Building_Introduction" cols="45" rows="5"><s:property value='cnbean.Building_Introduction'/></textarea></td>
                   </tr>
                   <tr>
                     <td height="30">&nbsp;</td>
-                    <td><input type="submit" name="button" id="button" value="开始查询"></td>
+                    <td><input type="submit" name="button" id="button" value="修改楼宇">
+                      &nbsp;&nbsp;
+                      <input type="button" name="button2" id="button2" value="返回上页" onClick="javascript:history.back(-1);"></td>
                   </tr>
                 </table>
               </form></td>

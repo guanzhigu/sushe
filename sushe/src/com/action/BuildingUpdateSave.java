@@ -11,39 +11,36 @@ import com.bean.*;
 import com.dao.*;
 
 
-public class AdminLogList extends ActionSupport {
+public class BuildingUpdateSave extends ActionSupport {
 
 	//下面是Action内用于封装用户请求参数的属性
-	private List<LogBean> list;
-	public List<LogBean> getList() {
-		return list;
-	}
-	public void setList(List<LogBean> list) {
-		this.list = list;
-	}
-	
-	private String Building_ID;
-	private String Domitory_ID;
-	private String Student_Username;
-	
+	private String Building_ID ;
+    private String Building_Name ;
+    private String Building_Introduction ;
 	public String getBuilding_ID() {
 		return Building_ID;
 	}
+
 	public void setBuilding_ID(String buildingID) {
 		Building_ID = buildingID;
 	}
-	public String getDomitory_ID() {
-		return Domitory_ID;
+
+	public String getBuilding_Name() {
+		return Building_Name;
 	}
-	public void setDomitory_ID(String domitoryID) {
-		Domitory_ID = domitoryID;
+
+	public void setBuilding_Name(String buildingName) {
+		Building_Name = buildingName;
 	}
-	public String getStudent_Username() {
-		return Student_Username;
+
+	public String getBuilding_Introduction() {
+		return Building_Introduction;
 	}
-	public void setStudent_Username(String studentUsername) {
-		Student_Username = studentUsername;
+
+	public void setBuilding_Introduction(String buildingIntroduction) {
+		Building_Introduction = buildingIntroduction;
 	}
+
 	//处理用户请求的execute方法
 	public String execute() throws Exception {
 		
@@ -61,26 +58,23 @@ public class AdminLogList extends ActionSupport {
 			out.print("<script language='javascript'>alert('请重新登录！');window.location='Login.jsp';</script>");
 			out.flush();out.close();return null;
 		}
-
-		//查询条件
-		String strWhere="Student_State='入住'";
-		if(!(isInvalid(Building_ID)))
-		{
-			strWhere+=" and Building_ID='"+Building_ID+"'";
-		}
-		if(!(isInvalid(Domitory_ID)))
-		{
-			strWhere+=" and Domitory_ID='"+Domitory_ID+"'";
-		}
-		if(!(isInvalid(Student_Username)))
-		{
-			strWhere+=" and Student_Username='"+Student_Username+"'";
-		}
-		//查询所有
-		list=new LogDao().GetList(strWhere,"Log_Date desc");
 		
-	
-		return SUCCESS;
+		//查询名称是否存在
+		List<BuildingBean> list=new BuildingDao().GetList("Building_Name='"+Building_Name+"' and Building_ID!="+Building_ID, "");
+		if(list.size()>0)
+		{
+			out.print("<script language='javascript'>alert('名称已经存在！');history.back(-1);</script>");
+			out.flush();out.close();return null;
+		}
+		//修改
+		BuildingBean cnbean=new BuildingBean();
+		cnbean=new BuildingDao().GetBean(Integer.parseInt(Building_ID));
+		cnbean.setBuilding_Name(Building_Name);
+		cnbean.setBuilding_Introduction(Building_Introduction);
+		new BuildingDao().Update(cnbean); 
+		//跳转
+		out.print("<script language='javascript'>alert('修改成功！');window.location='BuildingManager.action';</script>");
+		out.flush();out.close();return null;
 		
 	}
 	
